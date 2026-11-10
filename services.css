@@ -1,0 +1,1035 @@
+/* ==========================================================
+   VitaCare – services.html stylesheet
+   Dynamic photos + explaining videos (pure CSS)
+   ========================================================== */
+
+/* ---------- Tokens (blue + white, matching the home page) ---------- */
+:root {
+    --ink: #0b2545;
+    --ink-soft: #4a5d78;
+    --blue: #1d5fd6;
+    --blue-dark: #1549a8;
+    --mint: #e8f0ff;
+    --sky: #dce8fd;
+    --paper: #f4f8ff;
+    --white: #ffffff;
+    --line: #dbe5f5;
+
+    --radius-lg: 24px;
+    --radius-md: 14px;
+    --radius-pill: 999px;
+
+    --font-head: Georgia, "Times New Roman", serif;
+    --font-body: "Segoe UI", system-ui, -apple-system, Roboto, sans-serif;
+
+    /* FIX: defined here so it also works on desktop (it was only defined inside the mobile media query) */
+    --header-h: 72px;
+}
+
+/* ---------- Base ---------- */
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: calc(var(--header-h) + 12px);
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--paper);
+}
+
+img,
+video {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4 {
+    font-family: var(--font-head);
+    line-height: 1.15;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 3px;
+    border-radius: 6px;
+}
+
+/* ---------- Header ---------- */
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    height: var(--header-h);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 clamp(1rem, 5vw, 4rem);
+    background: var(--white);
+    border-bottom: 1px solid var(--line);
+}
+
+.logo,
+.footer-logo {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    font-family: var(--font-head);
+    font-weight: 700;
+    font-size: 1.35rem;
+    color: var(--ink);
+}
+
+.logo-icon {
+    display: grid;
+    place-items: center;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: var(--white);
+    font-size: 1.1rem;
+}
+
+.navbar {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.navbar a {
+    padding: 0.6rem 1.1rem;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    color: var(--ink-soft);
+    transition: background 0.25s, color 0.25s;
+}
+
+.navbar a:hover {
+    background: var(--mint);
+    color: var(--blue-dark);
+}
+
+.navbar a.active,
+.navbar a.active:hover {
+    background: var(--blue);
+    color: var(--white);
+}
+
+/* ---------- Shared bits ---------- */
+.services-tag {
+    display: inline-block;
+    color: var(--blue);
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+}
+
+.services-main-button {
+    display: inline-block;
+    padding: 0.95rem 1.9rem;
+    border-radius: var(--radius-pill);
+    background: var(--blue);
+    color: var(--white);
+    font-weight: 700;
+    box-shadow: 0 12px 24px -10px rgba(29, 95, 214, 0.7);
+    transition: transform 0.25s, background 0.25s, box-shadow 0.25s;
+}
+
+.services-main-button:hover {
+    background: var(--blue-dark);
+    transform: translateY(-3px);
+    box-shadow: 0 16px 28px -10px rgba(29, 95, 214, 0.9);
+}
+
+/* ==========================================================
+   HERO – text only (the photo frame next to the title was removed)
+   ========================================================== */
+.services-hero {
+    position: relative;
+    isolation: isolate;
+    display: grid;
+    align-items: center;
+    min-height: clamp(360px, 55vh, 500px);
+    padding: 4rem clamp(1rem, 5vw, 6rem);
+    background: linear-gradient(135deg, #e9f0ff 0%, #f6f9ff 100%);
+    color: var(--ink);
+}
+
+.medical-majors-banner {
+    width: 100%;
+    margin: 25px auto;
+    overflow: hidden;
+    border-radius: 16px;
+}
+
+.medical-majors-banner img {
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+.services-hero-content {
+    max-width: 560px;
+    animation: heroIn 1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+.services-hero h1 {
+    margin: 1.1rem 0 1rem;
+    font-size: clamp(2.3rem, 5.5vw, 4rem);
+    color: var(--ink);
+}
+
+.services-hero p {
+    margin-bottom: 2rem;
+    max-width: 56ch;
+    font-size: 1.1rem;
+    color: var(--ink-soft);
+}
+
+@keyframes heroIn {
+    from {
+        opacity: 0;
+        transform: translateY(26px);
+    }
+
+    to {
+        opacity: 1;
+        transform: none;
+    }
+}
+
+/* ==========================================================
+   SPECIALTIES GRID
+   ========================================================== */
+.medical-specialties {
+    padding: clamp(3.5rem, 8vw, 6rem) clamp(1rem, 5vw, 4rem);
+}
+
+.services-section-heading {
+    max-width: 680px;
+    margin: 0 auto 3.2rem;
+    text-align: center;
+}
+
+.services-section-heading h2 {
+    margin: 0.9rem 0 0.8rem;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+}
+
+.services-section-heading p {
+    color: var(--ink-soft);
+}
+
+.medical-services-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: 1.8rem;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+/* ---------- Card ---------- */
+.medical-service-card {
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-lg);
+    background: var(--white);
+    transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s;
+}
+
+.medical-service-card:hover,
+.medical-service-card:focus-within {
+    transform: translateY(-8px);
+    border-color: var(--blue);
+    box-shadow: 0 28px 44px -26px rgba(21, 73, 168, 0.55);
+}
+
+/* ---------- Dynamic photo ---------- */
+.medical-service-image {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    overflow: hidden;
+    background: var(--sky);
+}
+
+.medical-service-image img,
+.medical-service-image video {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Slow "breathing" drift so photos are never static.
+   FIX: hover zoom now uses the separate `scale` property, because a running or paused
+   animation on `transform` overrides any `transform` set in the hover rule. */
+.medical-service-image img {
+    animation: photoDrift 16s ease-in-out infinite alternate;
+    transition: scale 1.2s cubic-bezier(0.2, 0.7, 0.2, 1), filter 0.6s;
+}
+
+.medical-service-card:nth-child(even) .medical-service-image img {
+    animation-direction: alternate-reverse;
+    animation-duration: 19s;
+}
+
+@keyframes photoDrift {
+    from {
+        transform: scale(1.04) translate(0, 0);
+    }
+
+    to {
+        transform: scale(1.14) translate(-2.5%, -2%);
+    }
+}
+
+/* Hover: zoom + colour lift */
+.medical-service-card:hover .medical-service-image img {
+    animation-play-state: paused;
+    scale: 1.1;
+    filter: saturate(1.15) contrast(1.04);
+}
+
+/* Bottom gradient for depth */
+.medical-service-image::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 2;
+    background: linear-gradient(to top, rgba(14, 36, 51, 0.45), transparent 55%);
+    pointer-events: none;
+}
+
+/* Light sweep across the photo on hover */
+.medical-service-image::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -80%;
+    z-index: 3;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(105deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+    transform: skewX(-18deg);
+    pointer-events: none;
+}
+
+.medical-service-card:hover .medical-service-image::after {
+    left: 140%;
+    transition: left 0.9s ease;
+}
+
+/* Scroll-driven photo reveal (progressive enhancement) */
+@supports (animation-timeline: view()) {
+    .medical-service-image {
+        animation: photoReveal linear both;
+        animation-timeline: view();
+        animation-range: entry 0% entry 70%;
+    }
+
+    @keyframes photoReveal {
+        from {
+            clip-path: inset(0 0 100% 0);
+        }
+
+        to {
+            clip-path: inset(0 0 0 0);
+        }
+    }
+}
+
+/* ---------- Card text ---------- */
+.medical-service-content {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    padding: 1.5rem 1.6rem 1.7rem;
+}
+
+.service-category {
+    align-self: flex-start;
+    margin-bottom: 0.7rem;
+    padding: 0.2rem 0.7rem;
+    border-radius: var(--radius-pill);
+    background: var(--sky);
+    color: var(--blue-dark);
+    font-size: 0.78rem;
+    font-weight: 700;
+}
+
+.medical-service-content h3 {
+    margin-bottom: 0.6rem;
+    font-size: 1.4rem;
+}
+
+.medical-service-content>p {
+    margin-bottom: 1.1rem;
+    color: var(--ink-soft);
+    font-size: 0.96rem;
+}
+
+.medical-service-content h4 {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+    color: var(--blue-dark);
+}
+
+.medical-service-content ul {
+    flex: 1;
+    margin-bottom: 1.5rem;
+    list-style: none;
+}
+
+.medical-service-content li {
+    position: relative;
+    padding: 0.2rem 0 0.2rem 1.4rem;
+    font-size: 0.93rem;
+}
+
+.medical-service-content li::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 0.72rem;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 0 0 3px var(--sky);
+}
+
+.medical-service-link {
+    align-self: flex-start;
+    padding: 0.65rem 1.3rem;
+    border: 2px solid var(--blue);
+    border-radius: var(--radius-pill);
+    font-weight: 700;
+    color: var(--blue-dark);
+    transition: background 0.25s, color 0.25s;
+}
+
+.medical-service-link:hover {
+    background: var(--blue);
+    color: var(--white);
+}
+
+/* ==========================================================
+   EXPLAINING VIDEOS
+   ========================================================== */
+
+/* ---- 1. Hover-preview video inside a card photo ----
+   <div class="medical-service-image">
+       <img ...>
+       <video class="service-video-preview" muted loop playsinline preload="none" data-src="videos/cardiology.mp4"></video>
+       <button class="video-badge">Watch</button>
+   </div>
+*/
+.service-video-preview {
+    z-index: 1;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.medical-service-card:hover .service-video-preview,
+.medical-service-card:focus-within .service-video-preview {
+    opacity: 1;
+}
+
+.video-badge {
+    position: absolute;
+    right: 0.9rem;
+    bottom: 0.9rem;
+    z-index: 4;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.35rem 0.8rem;
+    border-radius: var(--radius-pill);
+    background: rgba(255, 255, 255, 0.94);
+    color: var(--ink);
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.video-badge::before {
+    content: "";
+    border-style: solid;
+    border-width: 5px 0 5px 8px;
+    border-color: transparent transparent transparent var(--blue);
+}
+
+/* ---- 2. Video section (grid of explainer cards) ---- */
+.services-videos {
+    padding: clamp(3.5rem, 8vw, 6rem) clamp(1rem, 5vw, 4rem);
+    background: var(--ink);
+    color: var(--white);
+}
+
+.services-videos .services-section-heading p {
+    color: rgba(255, 255, 255, 0.75);
+}
+
+.services-videos .services-tag {
+    color: #8db4ff;
+}
+
+.video-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
+    gap: 1.6rem;
+    max-width: 1240px;
+    margin: 0 auto;
+}
+
+.video-card {
+    display: block;
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    transition: transform 0.35s, border-color 0.35s;
+}
+
+.video-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--blue);
+}
+
+.video-thumb {
+    position: relative;
+    aspect-ratio: 16 / 9;
+    overflow: hidden;
+}
+
+.video-thumb img,
+.video-thumb video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.video-card:hover .video-thumb img,
+.video-card:hover .video-thumb video {
+    transform: scale(1.1);
+}
+
+/* Play button with pulse ring */
+.video-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 68px;
+    height: 68px;
+    margin: -34px 0 0 -34px;
+    border-radius: 50%;
+    background: var(--blue);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.35);
+}
+
+.video-play::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 53%;
+    transform: translate(-50%, -50%);
+    border-style: solid;
+    border-width: 11px 0 11px 18px;
+    border-color: transparent transparent transparent var(--white);
+}
+
+.video-play::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    border: 2px solid var(--blue);
+    animation: playPulse 2.2s ease-out infinite;
+}
+
+@keyframes playPulse {
+    from {
+        transform: scale(1);
+        opacity: 0.9;
+    }
+
+    to {
+        transform: scale(1.9);
+        opacity: 0;
+    }
+}
+
+.video-duration {
+    position: absolute;
+    right: 0.8rem;
+    bottom: 0.8rem;
+    padding: 0.15rem 0.55rem;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.72);
+    font-size: 0.78rem;
+    font-weight: 600;
+}
+
+.video-info {
+    padding: 1.1rem 1.3rem 1.4rem;
+}
+
+.video-info h3 {
+    margin-bottom: 0.35rem;
+    font-size: 1.1rem;
+}
+
+.video-info p {
+    font-size: 0.92rem;
+    color: rgba(255, 255, 255, 0.72);
+}
+
+/* ---- 3. Video modal (opens with :target or with JavaScript via .is-open) ---- */
+.video-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 200;
+    display: grid;
+    place-items: center;
+    padding: 1rem;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.35s, visibility 0.35s;
+}
+
+.video-modal:target,
+.video-modal.is-open {
+    visibility: visible;
+    opacity: 1;
+}
+
+.video-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(8, 20, 30, 0.86);
+    backdrop-filter: blur(6px);
+}
+
+/* FIX: the two separate .video-modal-box blocks were merged into one */
+.video-modal-box {
+    position: relative;
+    width: min(960px, 100%);
+    aspect-ratio: 16 / 9;
+    overflow: visible;
+    background: transparent;
+    box-shadow: none;
+    transform: scale(0.92);
+    transition: transform 0.4s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+
+.video-modal:target .video-modal-box,
+.video-modal.is-open .video-modal-box {
+    transform: scale(1);
+}
+
+.video-modal-box video,
+.video-modal-box iframe {
+    width: 100%;
+    height: 100%;
+    border: 0;
+    object-fit: contain;
+}
+
+.video-modal-box video {
+    border-radius: var(--radius-md);
+    background: #000;
+    box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6);
+}
+
+.video-modal-title {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: calc(100% + 0.6rem);
+    color: var(--white);
+    font-family: var(--font-head);
+    font-size: 1.15rem;
+}
+
+.video-modal-close {
+    position: absolute;
+    top: -3rem;
+    right: 0;
+    display: grid;
+    place-items: center;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.92);
+    color: var(--ink);
+    font-size: 1rem;
+    font-weight: 700;
+    transition: background 0.25s, transform 0.25s;
+}
+
+.video-modal-close:hover {
+    background: var(--blue);
+    color: var(--white);
+    transform: rotate(90deg);
+}
+
+/* Shown when the video file is not found */
+.video-missing {
+    position: absolute;
+    inset: 0;
+    display: none;
+    place-items: center;
+    padding: 2rem;
+    border-radius: var(--radius-md);
+    background: var(--ink);
+    color: var(--white);
+    text-align: center;
+}
+
+.video-missing.show {
+    display: grid;
+}
+
+.video-missing code {
+    padding: 0.1rem 0.4rem;
+    border-radius: 6px;
+    background: rgba(255, 255, 255, 0.14);
+}
+
+/* Elements that are <button> instead of <a> */
+button.video-badge,
+button.video-card,
+button.video-modal-backdrop,
+button.video-modal-close {
+    border: 0;
+    cursor: pointer;
+    font-family: var(--font-body);
+}
+
+button.video-badge {
+    transition: transform 0.25s, background 0.25s, color 0.25s;
+}
+
+button.video-badge:hover {
+    transform: scale(1.08);
+    background: var(--blue);
+    color: var(--white);
+}
+
+button.video-badge:hover::before {
+    border-left-color: var(--white);
+}
+
+button.video-card {
+    width: 100%;
+    padding: 0;
+    font: inherit;
+    color: inherit;
+    text-align: left;
+}
+
+/* ==========================================================
+   COMMITMENT BANNER
+   ========================================================== */
+.services-commitment {
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+    padding: clamp(3.5rem, 8vw, 6rem) clamp(1rem, 5vw, 4rem);
+    text-align: center;
+    color: var(--white);
+    background: linear-gradient(120deg, #1549a8, #1d5fd6, #3b82f6, #1549a8);
+    background-size: 300% 300%;
+    animation: bannerFlow 14s ease-in-out infinite;
+}
+
+@keyframes bannerFlow {
+
+    0%,
+    100% {
+        background-position: 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%;
+    }
+}
+
+/* Soft floating light spots */
+.services-commitment::before,
+.services-commitment::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.09);
+    animation: floatSpot 11s ease-in-out infinite alternate;
+}
+
+.services-commitment::before {
+    width: 340px;
+    height: 340px;
+    top: -140px;
+    left: -80px;
+}
+
+.services-commitment::after {
+    width: 260px;
+    height: 260px;
+    bottom: -110px;
+    right: -60px;
+    animation-delay: -5s;
+}
+
+@keyframes floatSpot {
+    from {
+        transform: translate(0, 0);
+    }
+
+    to {
+        transform: translate(40px, 30px);
+    }
+}
+
+.commitment-content {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.commitment-content h2 {
+    margin-bottom: 1rem;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+}
+
+.commitment-content p {
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* ==========================================================
+   AUTO-SCROLLING PHOTO STRIP
+   (the HTML must repeat the same <figure> items twice so the loop is seamless)
+   ========================================================== */
+.photo-marquee {
+    overflow: hidden;
+    padding: clamp(3.5rem, 8vw, 6rem) 0;
+    background: var(--white);
+}
+
+.photo-marquee .services-section-heading {
+    padding: 0 1rem;
+}
+
+.marquee-track {
+    display: flex;
+    gap: 1.2rem;
+    width: max-content;
+    animation: marquee 55s linear infinite;
+}
+
+.photo-marquee:hover .marquee-track {
+    animation-play-state: paused;
+}
+
+.marquee-track figure {
+    position: relative;
+    flex: none;
+    width: clamp(240px, 26vw, 340px);
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+}
+
+.marquee-track img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.8s ease;
+}
+
+.marquee-track figure:hover img {
+    transform: scale(1.12);
+}
+
+.marquee-track figcaption {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    padding: 1.6rem 1rem 0.8rem;
+    background: linear-gradient(to top, rgba(11, 37, 69, 0.8), transparent);
+    color: var(--white);
+    font-family: var(--font-head);
+    font-weight: 700;
+}
+
+@keyframes marquee {
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+/* ==========================================================
+   FOOTER
+   ========================================================== */
+.footer {
+    padding: 3rem clamp(1rem, 5vw, 4rem) 2rem;
+    text-align: center;
+    background: var(--ink);
+    color: rgba(255, 255, 255, 0.78);
+}
+
+.footer-logo {
+    justify-content: center;
+    margin-bottom: 0.8rem;
+    color: var(--white);
+}
+
+.footer-links {
+    display: flex;
+    justify-content: center;
+    gap: 1.6rem;
+    margin: 1.4rem 0;
+}
+
+.footer-links a {
+    font-weight: 600;
+    transition: color 0.25s;
+}
+
+.footer-links a:hover {
+    color: var(--blue);
+}
+
+.footer-copyright {
+    padding-top: 1.4rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    font-size: 0.85rem;
+}
+
+/* ==========================================================
+   RESPONSIVE
+   ========================================================== */
+@media (max-width: 720px) {
+    :root {
+        --header-h: 100px;
+    }
+
+    .header {
+        flex-direction: column;
+        justify-content: center;
+        gap: 0.2rem;
+        height: auto;
+        min-height: var(--header-h);
+        padding-block: 0.6rem;
+    }
+
+    .navbar {
+        gap: 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* ==========================================================
+   ACCESSIBILITY – reduce motion
+   ========================================================== */
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+    .marquee-track {
+        animation: none;
+        overflow-x: auto;
+        width: auto;
+    }
+}
+
+/* Hero section: text on the left, image on the right */
+
+.services-hero-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 5%;
+}
+
+.hero-text {
+    flex: 1;
+    min-width: 0;
+}
+
+.hero-text h1 {
+    font-size: 42px;
+    line-height: 1.2;
+    margin: 20px 0;
+}
+
+.hero-text p {
+    line-height: 1.8;
+    margin-bottom: 25px;
+}
+
+.medical-majors-banner {
+    flex: 1.2;
+    min-width: 0;
+}
+
+.medical-majors-banner img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 16px;
+    object-fit: contain;
+}
+
+/* Responsive design for phones */
+@media (max-width: 768px) {
+    .services-hero-content {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 30px;
+    }
+
+    .hero-text h1 {
+        font-size: 30px;
+    }
+
+    .medical-majors-banner {
+        width: 100%;
+    }
+}

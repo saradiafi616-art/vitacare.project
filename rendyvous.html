@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Book an Appointment | VitaCare</title>
+
+    <link rel="stylesheet" href="rendyvous.css">
+
+    <style>
+        /* ---------- Medical report upload ---------- */
+        .file-upload {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+            padding: 12px;
+            border: 1px dashed #b8cbd8;
+            border-radius: 10px;
+            background: #f8fbfd;
+        }
+
+        .file-upload input[type="file"] {
+            display: none;
+        }
+
+        .file-upload .upload-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+
+            padding: 10px 18px;
+            margin: 0;
+            background: #2166d1;
+            color: #ffffff;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            transition: background 0.3s ease;
+        }
+
+        .file-upload .upload-btn:hover {
+            background: #174fa8;
+        }
+
+        .file-upload .upload-btn span {
+            font-size: 18px;
+            line-height: 1;
+        }
+
+        #fileName {
+            color: #64748b;
+            font-size: 13px;
+            overflow-wrap: anywhere;
+        }
+
+        #fileMessage {
+            color: #c0392b;
+            font-size: 13px;
+            margin-top: 8px;
+        }
+
+
+        /* ---------- Validation messages ---------- */
+        .form-summary {
+            display: none;
+            grid-column: 1 / -1;
+            color: #b3261e;
+            font-weight: 600;
+            margin-bottom: .5rem;
+        }
+
+        .field-error {
+            display: block;
+            color: #b3261e;
+            font-size: 13px;
+            margin-top: 4px;
+            min-height: 0;
+        }
+
+        .form-field.invalid input,
+        .form-field.invalid select,
+        .form-field.invalid textarea {
+            border-color: #b3261e;
+        }
+
+        .form-field.valid input,
+        .form-field.valid select,
+        .form-field.valid textarea {
+            border-color: #2e7d32;
+        }
+
+        .char-count {
+            display: block;
+            text-align: right;
+
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 4px;
+        }
+
+        .char-count.limit {
+            color: #b3261e;
+        }
+
+        /* ---------- Confirmation box ---------- */
+        #confirmation {
+            display: none;
+            padding: 8px 4px;
+            outline: none;
+        }
+
+        #confirmation h2 {
+            margin-bottom: 12px;
+        }
+
+        #confirmation p {
+            margin: 6px 0;
+        }
+
+        #confirmation .confirm-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        #confirmation .confirm-actions a {
+
+            display: inline-block;
+            text-decoration: none;
+            text-align: center;
+        }
+
+        .pdf-status {
+            margin-top: 12px;
+            font-size: 14px;
+            color: #2e7d32;
+        }
+
+        .pdf-status.error {
+            color: #b3261e;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <!-- HEADER -->
+
+    <header class="header">
+
+        <a href="index.html" class="logo">
+            <span class="logo-icon">+</span>
+            VitaCare
+        </a>
+
+        <nav class="navbar">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+
+            <a href="rendyvous.html" class="active">Appointment</a>
+            <a href="team.html">Our Team</a>
+        </nav>
+
+    </header>
+
+
+    <!-- HERO SECTION -->
+
+    <section class="appointment-hero">
+
+        <div class="appointment-hero-content">
+
+            <span class="services-tag">APPOINTMENT</span>
+
+            <h1>Book your visit in a few steps</h1>
+
+            <p>
+                Choose a specialty, a date and a time.
+                Our team will call you to confirm your appointment.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- APPOINTMENT SECTION -->
+
+    <section class="appointment-section">
+
+        <div class="appointment-layout">
+
+
+            <!-- LEFT COLUMN -->
+
+            <div class="appointment-card">
+
+                <h2>Appointment request</h2>
+
+                <p class="appointment-card-intro">
+                    Fields marked with * are required.
+                </p>
+
+                <!-- APPOINTMENT FORM (the only form with this id) -->
+
+                <form id="appointment-form" action="appointment.php" method="POST" enctype="multipart/form-data"
+                    novalidate>
+
+                    <div class="form-grid">
+
+                        <!-- FULL NAME -->
+
+                        <div class="form-field">
+                            <label for="name">Full name *</label>
+                            <input type="text" id="name" name="name" placeholder="Enter your full name"
+                                autocomplete="name">
+                        </div>
+
+
+                        <!-- PHONE NUMBER -->
+
+                        <div class="form-field">
+                            <label for="phone">Phone number *</label>
+                            <input type="tel" id="phone" name="phone" placeholder="0555 12 34 56 or +213 ..."
+                                autocomplete="tel">
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="form-field full">
+                            <label for="email">Email (optional)</label>
+                            <input type="email" id="email" name="email" placeholder="example@email.com"
+                                autocomplete="email">
+                        </div>
+
+
+                        <!-- SPECIALTY -->
+
+                        <div class="form-field full">
+                            <label for="specialty">Specialty *</label>
+
+                            <select id="specialty" name="specialty">
+                                <option value="">Choose a specialty</option>
+                                <option value="general">General Medicine</option>
+                                <option value="cardiology">Cardiology</option>
+                                <option value="dermatology">Dermatology</option>
+                                <option value="pediatrics">Pediatrics</option>
+                                <option value="dentistry">Dentistry</option>
+                                <option value="gynecology">Gynecology</option>
+                                <option value="ophthalmology">Ophthalmology</option>
+                                <option value="neurology">Neurology</option>
+                                <option value="orthopedics">Orthopedics</option>
+                                <option value="ent">ENT</option>
+                            </select>
+                        </div>
+
+
+
+                        <!-- PREFERRED DATE -->
+
+                        <div class="form-field full">
+                            <label for="date">Preferred date *</label>
+                            <input type="date" id="date" name="date">
+                        </div>
+
+
+                        <!-- PREFERRED TIME -->
+
+                        <div class="form-field full">
+                            <label for="time">Preferred time *</label>
+
+                            <select id="time" name="time" disabled>
+                                <option value="">Choose a date first</option>
+                            </select>
+                        </div>
+
+
+                        <!-- ADDITIONAL MESSAGE -->
+
+                        <div class="form-field full">
+                            <label for="message">Additional information (optional)</label>
+                            <textarea id="message" name="message" maxlength="500"
+                                placeholder="Tell us more about your appointment..."></textarea>
+                            <span class="char-count" id="message-count">0 / 500</span>
+                        </div>
+
+
+                        <!-- PDF UPLOAD -->
+
+
+                        <div class="form-field full">
+
+                            <label for="medicalFile">Upload Medical Report (PDF)</label>
+
+                            <div class="file-upload">
+
+                                <input type="file" id="medicalFile" name="medicalFile" accept=".pdf,application/pdf">
+
+                                <label for="medicalFile" class="upload-btn">
+                                    <span>+</span>
+                                    Choose PDF File
+                                </label>
+
+                                <span id="fileName">No file selected</span>
+
+                            </div>
+
+                            <small>
+                                Upload your previous medical reports or medical tests.
+                                PDF files only. Maximum size: 5 MB.
+                            </small>
+
+                            <p id="fileMessage"></p>
+
+                        </div>
+
+
+                        <!-- ERROR SUMMARY -->
+
+                        <div class="form-summary" id="form-summary" role="alert"></div>
+
+
+
+                        <!-- SUBMIT BUTTON -->
+
+                        <div class="form-field full">
+                            <button type="submit" class="appointment-submit">
+                                Send my request
+                            </button>
+                        </div>
+
+                    </div>
+
+                </form>
+
+
+                <!-- CONFIRMATION (shown after sending) -->
+
+                <div id="confirmation" tabindex="-1">
+
+                    <h2>Request sent ✔</h2>
+
+                    <p>Thank you, <strong id="c-name"></strong>.</p>
+                    <p>Reference: <strong id="c-ref"></strong></p>
+                    <p>Specialty: <span id="c-specialty"></span></p>
+                    <p>Date: <span id="c-date"></span> — <span id="c-time"></span></p>
+                    <p>Phone: <span id="c-phone"></span></p>
+                    <p>Our team will call you to confirm your appointment.</p>
+
+                    <div class="confirm-actions">
+                        <a href="#" id="download-pdf" class="appointment-submit">Download appointment PDF</a>
+                        <a href="rendyvous.html" class="appointment-submit">New request</a>
+                    </div>
+
+
+                    <p id="pdf-status" class="pdf-status" aria-live="polite"></p>
+
+                </div>
+
+            </div>
+
+
+            <!-- RIGHT COLUMN -->
+
+            <aside class="appointment-side">
+
+                <div class="appointment-photo">
+                    <img src="img/vitecare.jfif" alt="VitaCare Medical Clinic">
+                </div>
+
+                <div class="appointment-info">
+
+                    <h3>Opening hours</h3>
+
+                    <ul>
+                        <li>Sunday to Thursday: 08:00 – 17:00</li>
+                        <li>Saturday: 08:00 – 12:00</li>
+                        <li>Friday: Closed</li>
+                    </ul>
+
+                    <h3>Before your visit</h3>
+
+                    <ul>
+                        <li>Bring your ID and previous medical reports.</li>
+                        <li>Arrive 10 minutes early for a first visit.</li>
+                        <li>Need help? Call +213 782408544.</li>
+                    </ul>
+
+
+                </div>
+
+            </aside>
+
+        </div>
+
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+
+    <section class="appointment-steps">
+
+        <div class="services-section-heading">
+
+            <span class="services-tag">HOW IT WORKS</span>
+
+            <h2>Three simple steps</h2>
+
+            <p>From your request to your consultation.</p>
+
+        </div>
+
+        <div class="steps-grid">
+
+            <div class="step-card">
+                <div class="step-number">1</div>
+                <h3>Send your request</h3>
+                <p>Choose the specialty, the date and the time that suit you.</p>
+            </div>
+
+
+            <div class="step-card">
+                <div class="step-number">2</div>
+                <h3>We confirm by phone</h3>
+                <p>Our team calls you to confirm the appointment or suggest another time.</p>
+            </div>
+
+            <div class="step-card">
+                <div class="step-number">3</div>
+                <h3>Visit the clinic</h3>
+                <p>Meet your doctor and receive clear explanations and follow-up.</p>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+
+    <footer class="footer">
+
+        <a href="index.html" class="footer-logo">
+            <span class="logo-icon">+</span>
+            VitaCare
+        </a>
+
+        <p>Multi-specialty medical clinic</p>
+
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="services.html">Services</a>
+            <a href="rendyvous.html">Appointment</a>
+
+        </div>
+
+        <div class="footer-copyright">
+            <p>&copy; <span id="year">2026</span> VitaCare. All rights reserved.</p>
+        </div>
+
+    </footer>
+
+
+    <!-- JAVASCRIPT -->
+
+    <!-- PDF library (local file first) -->
+    <script src="jspdf.umd.min.js"></script>
+    <script>
+        // If the local file is missing, load the library from the internet
+        if (!(window.jspdf && window.jspdf.jsPDF)) {
+            var s = document.createElement("script");
+            s.src = "https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js";
+            document.head.appendChild(s);
+        }
+    </script>
+
+    <!-- Page script (validation + appointment PDF) -->
+    <script src="appointment.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,969 @@
+/* ==========================================================
+   VitaCare - rendyvous.css
+   Appointment Page
+   ========================================================== */
+
+/* ---------- Variables ---------- */
+
+:root {
+    --ink: #0a2540;
+    --blue: #1c64d6;
+    --blue-dark: #0f3f94;
+    --mist: #eaf2fd;
+    --paper: #ffffff;
+    --sky: #8fc1ff;
+    --text: #44566c;
+    --line: #d5e2f3;
+    --danger: #b3261e;
+    --success: #2f9e6e;
+
+    --font-heading: Georgia, "Times New Roman", serif;
+    --font-body: "Segoe UI", system-ui, -apple-system,
+        Roboto, Arial, sans-serif;
+
+    --radius-s: 8px;
+    --radius-l: 28px;
+
+    --page-width: 1180px;
+    --side-pad: max(1.5rem, calc((100% - var(--page-width)) / 2));
+}
+
+/* ---------- Reset & Base ---------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 90px;
+}
+
+body {
+    font-family: var(--font-body);
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--text);
+    background: var(--paper);
+}
+
+img {
+    display: block;
+    max-width: 100%;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
+
+ul {
+    list-style: none;
+}
+
+h1,
+h2,
+h3 {
+    font-family: var(--font-heading);
+    color: var(--ink);
+    font-weight: 700;
+    line-height: 1.15;
+}
+
+:focus-visible {
+    outline: 3px solid var(--blue);
+    outline-offset: 3px;
+}
+
+/* ---------- Tooltips ---------- */
+
+[data-tip] {
+    position: relative;
+}
+
+[data-tip]::after {
+    content: attr(data-tip);
+    position: absolute;
+    left: 50%;
+    bottom: calc(100% + 8px);
+    z-index: 50;
+
+    width: max-content;
+    max-width: 240px;
+
+    padding: 0.45rem 0.8rem;
+
+    border-radius: var(--radius-s);
+    background: var(--ink);
+    color: #fff;
+
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 1.4;
+
+    text-align: center;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transform: translate(-50%, 4px);
+    transition: opacity 0.2s, transform 0.2s;
+}
+
+[data-tip]:hover::after,
+.header [data-tip]:focus-visible::after {
+    opacity: 1;
+    transform: translate(-50%, 0);
+}
+
+.header [data-tip]::after {
+    top: calc(100% + 10px);
+    bottom: auto;
+}
+
+/* ---------- Header & Navigation ---------- */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 1.5rem;
+    padding: 0.9rem var(--side-pad);
+
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+
+    border-bottom: 1px solid var(--line);
+}
+
+.logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.logo-icon {
+    display: grid;
+    place-items: center;
+
+    width: 2.1rem;
+    height: 2.1rem;
+
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+
+    font-family: var(--font-body);
+    font-size: 1.1rem;
+}
+
+.navbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.navbar a {
+    padding: 0.5rem 1rem;
+    border-radius: 999px;
+
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--text);
+
+    transition: background 0.2s, color 0.2s;
+}
+
+.navbar a:hover {
+    background: var(--mist);
+    color: var(--blue-dark);
+}
+
+.navbar a.active {
+    background: var(--blue);
+    color: #fff;
+}
+
+/* ---------- Shared Section Heading ---------- */
+
+.services-tag {
+    display: inline-block;
+
+    margin-bottom: 0.9rem;
+    padding: 0.3rem 1rem;
+
+    border-radius: 999px;
+    background: var(--mist);
+    border: 1px solid var(--line);
+
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    color: var(--blue);
+}
+
+.services-section-heading {
+    max-width: 640px;
+    margin: 0 auto 3rem;
+    text-align: center;
+}
+
+.services-section-heading h2 {
+    margin-bottom: 0.8rem;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+}
+
+/* ---------- Appointment Hero ---------- */
+
+.appointment-hero {
+    padding: 4.5rem var(--side-pad) 3rem;
+    text-align: center;
+
+    background: linear-gradient(180deg,
+            var(--mist) 0%,
+            var(--paper) 100%);
+}
+
+.appointment-hero-content {
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.appointment-hero h1 {
+    margin-bottom: 1rem;
+
+    font-size: clamp(2.2rem, 5vw, 3.6rem);
+    letter-spacing: -0.01em;
+}
+
+.appointment-hero p {
+    font-size: 1.15rem;
+}
+
+/* ==========================================================
+   APPOINTMENT LAYOUT
+   FORM LEFT + PHOTO AND INFORMATION RIGHT
+   ========================================================== */
+
+.appointment-section {
+    padding: 1.5rem var(--side-pad) 4.5rem;
+}
+
+.appointment-layout {
+    display: grid;
+
+    /* Two columns on desktop */
+    grid-template-columns:
+        minmax(0, 1.5fr) minmax(280px, 1fr);
+
+    align-items: start;
+    gap: 2rem;
+
+    width: 100%;
+    max-width: 1180px;
+    margin: 0 auto;
+}
+
+/* ---------- Appointment Form Card ---------- */
+
+.appointment-card {
+    min-width: 0;
+
+    padding: 2.5rem;
+
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+
+    box-shadow: 0 24px 50px rgba(10, 37, 64, 0.08);
+}
+
+.appointment-card h2 {
+    margin-bottom: 0.4rem;
+    font-size: 1.8rem;
+}
+
+.appointment-card-intro {
+    margin-bottom: 1.8rem;
+    font-size: 0.95rem;
+}
+
+/* ---------- Form Grid ---------- */
+
+.form-grid {
+    display: grid;
+
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem 1.4rem;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-field.full {
+    grid-column: 1 / -1;
+}
+
+.form-field label {
+    font-weight: 600;
+    font-size: 0.95rem;
+    color: var(--ink);
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+    width: 100%;
+
+    padding: 0.8rem 1rem;
+
+    border: 1.5px solid var(--line);
+    border-radius: var(--radius-s);
+
+    background: #fff;
+    color: var(--ink);
+
+    font: inherit;
+    font-size: 1rem;
+
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.form-field textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+/* Input Focus */
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+    outline: none;
+
+    border-color: var(--blue);
+
+    box-shadow: 0 0 0 4px rgba(28, 100, 214, 0.15);
+}
+
+.form-field select:disabled {
+    background: var(--mist);
+    cursor: not-allowed;
+}
+
+/* Validation */
+
+.form-field.invalid input,
+.form-field.invalid select,
+.form-field.invalid textarea {
+    border-color: var(--danger);
+}
+
+.form-field.valid input,
+.form-field.valid select,
+.form-field.valid textarea {
+    border-color: var(--success);
+}
+
+.field-error {
+    min-height: 1.1em;
+
+    font-size: 0.85rem;
+    line-height: 1.3;
+
+    color: var(--danger);
+}
+
+.form-summary {
+    display: none;
+
+    grid-column: 1 / -1;
+
+    padding: 0.9rem 1.1rem;
+
+    border-radius: var(--radius-s);
+
+    background: #fdecea;
+    border: 1px solid #f3b8b3;
+
+    color: var(--danger);
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.form-summary.is-visible {
+    display: block;
+}
+
+/* ---------- Submit Button ---------- */
+
+.appointment-submit {
+    width: 100%;
+
+    padding: 0.95rem 1.8rem;
+
+    border: 0;
+    border-radius: 999px;
+
+    background: var(--blue);
+    color: #fff;
+
+    font: inherit;
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: background 0.2s, transform 0.2s;
+}
+
+.appointment-submit:hover {
+    background: var(--blue-dark);
+    transform: translateY(-2px);
+}
+
+.appointment-submit:disabled {
+    opacity: 0.6;
+    cursor: wait;
+    transform: none;
+}
+
+/* ---------- Confirmation ---------- */
+
+.confirmation {
+    display: none;
+    text-align: center;
+}
+
+.confirmation.is-visible {
+    display: block;
+}
+
+.confirmation:focus {
+    outline: none;
+}
+
+.confirmation-check {
+    display: grid;
+    place-items: center;
+
+    width: 4rem;
+    height: 4rem;
+
+    margin: 0 auto 1.2rem;
+
+    border-radius: 50%;
+    background: var(--success);
+    color: #fff;
+
+    font-size: 2rem;
+}
+
+.confirmation h2 {
+    margin-bottom: 0.6rem;
+}
+
+.confirmation dl {
+    display: grid;
+
+    grid-template-columns: auto 1fr;
+    gap: 0.6rem 1.5rem;
+
+    margin: 1.6rem 0;
+    padding: 1.4rem;
+
+    border-radius: var(--radius-s);
+    background: var(--mist);
+
+    text-align: left;
+}
+
+.confirmation dt {
+    font-weight: 700;
+    color: var(--ink);
+}
+
+.confirmation dd {
+    text-align: right;
+    word-break: break-word;
+}
+
+.confirmation-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 0.8rem;
+}
+
+.confirmation-link {
+    padding: 0.8rem 1.5rem;
+
+    border-radius: 999px;
+    border: 1.5px solid var(--blue);
+
+    color: var(--blue-dark);
+    font-weight: 700;
+
+    transition: background 0.2s, color 0.2s;
+}
+
+.confirmation-link:hover {
+    background: var(--mist);
+}
+
+.confirmation-link.primary {
+    background: var(--blue);
+    color: #fff;
+}
+
+.confirmation-link.primary:hover {
+    background: var(--blue-dark);
+}
+
+.pdf-status {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: var(--success);
+}
+
+.pdf-status.error {
+    color: var(--danger);
+}
+
+/* ==========================================================
+   RIGHT COLUMN: CLINIC PHOTO + INFORMATION
+   ========================================================== */
+
+.appointment-side {
+    position: sticky;
+    top: 100px;
+
+    display: grid;
+    grid-template-columns: 1fr;
+
+    align-content: start;
+    gap: 1.5rem;
+
+    min-width: 0;
+}
+
+/* Clinic Photo */
+
+.appointment-photo {
+    width: 100%;
+
+    overflow: hidden;
+
+    border-radius: var(--radius-l);
+
+    background: var(--mist);
+
+    box-shadow: 0 18px 40px rgba(10, 37, 64, 0.12);
+}
+
+.appointment-photo:not(:has(img)) {
+    display: none;
+}
+
+.appointment-photo img {
+    width: 100%;
+    height: auto;
+
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+/* Opening Hours and Before Your Visit */
+
+.appointment-info {
+    padding: 2rem 1.8rem;
+
+    border: 1px solid var(--line);
+    border-radius: var(--radius-l);
+
+    background: var(--mist);
+}
+
+.appointment-info h3 {
+    margin-bottom: 0.7rem;
+    font-size: 1.25rem;
+}
+
+.appointment-info ul {
+    display: grid;
+
+    gap: 0.45rem;
+
+    margin-bottom: 1.5rem;
+
+    font-size: 0.97rem;
+}
+
+.appointment-info ul:last-child {
+    margin-bottom: 0;
+}
+
+.appointment-info li {
+    position: relative;
+    padding-left: 1.3rem;
+}
+
+.appointment-info li::before {
+    content: "✓";
+
+    position: absolute;
+    left: 0;
+
+    font-weight: 700;
+    color: var(--blue);
+}
+
+/* ==========================================================
+   HOW IT WORKS
+   ========================================================== */
+
+.appointment-steps {
+    padding: 4.5rem var(--side-pad) 5.5rem;
+    background: var(--mist);
+}
+
+.steps-grid {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.8rem;
+}
+
+.step-card {
+    padding: 2.2rem 1.9rem;
+
+    background: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius-s);
+
+    transition: border-color 0.2s, transform 0.2s;
+}
+
+.step-card:hover {
+    border-color: var(--blue);
+    transform: translateY(-4px);
+}
+
+.step-number {
+    display: grid;
+    place-items: center;
+
+    width: 3rem;
+    height: 3rem;
+
+    margin-bottom: 1.2rem;
+
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+
+    font-family: var(--font-heading);
+    font-size: 1.4rem;
+    font-weight: 700;
+}
+
+.step-card h3 {
+    margin-bottom: 0.6rem;
+    font-size: 1.35rem;
+}
+
+/* ==========================================================
+   FOOTER
+   ========================================================== */
+
+.footer {
+    padding: 3.5rem var(--side-pad) 1.8rem;
+
+    text-align: center;
+
+    background: var(--ink);
+    color: #b8c9e0;
+}
+
+.footer-logo {
+    display: inline-flex;
+    align-items: center;
+
+    gap: 0.6rem;
+    margin-bottom: 0.6rem;
+
+    font-family: var(--font-heading);
+    font-size: 1.6rem;
+    font-weight: 700;
+
+    color: #fff;
+}
+
+.footer-logo .logo-icon {
+    background: var(--sky);
+    color: var(--ink);
+}
+
+.footer-links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    gap: 0.4rem 1.5rem;
+
+    margin: 1.4rem 0;
+}
+
+.footer-links a {
+    font-weight: 600;
+    transition: color 0.2s;
+}
+
+.footer-links a:hover {
+    color: #fff;
+}
+
+.footer-copyright {
+    padding-top: 1.4rem;
+
+    border-top: 1px solid rgba(255, 255, 255, 0.15);
+
+    font-size: 0.9rem;
+}
+
+/* ==========================================================
+   TABLET RESPONSIVE DESIGN
+   ========================================================== */
+
+@media (max-width: 960px) {
+
+    .appointment-layout {
+        grid-template-columns:
+            minmax(0, 1.2fr) minmax(250px, 0.8fr);
+
+        gap: 1.2rem;
+    }
+
+    .appointment-card {
+        padding: 1.8rem;
+    }
+
+    .appointment-side {
+        position: sticky;
+        top: 100px;
+    }
+
+    .appointment-info {
+        padding: 1.5rem;
+    }
+
+    .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* ==========================================================
+   MOBILE RESPONSIVE DESIGN
+   ========================================================== */
+
+@media (max-width: 700px) {
+
+    .header {
+        flex-direction: column;
+        gap: 0.7rem;
+    }
+
+    .navbar {
+        justify-content: center;
+    }
+
+    .navbar a {
+        padding: 0.4rem 0.8rem;
+    }
+
+    /* Form first, photo and information below */
+
+    .appointment-layout {
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    .appointment-card {
+        padding: 1.6rem 1.2rem;
+    }
+
+    .appointment-side {
+        position: static;
+        width: 100%;
+    }
+
+    .appointment-photo img {
+        aspect-ratio: 16 / 9;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .confirmation dl {
+        grid-template-columns: 1fr;
+        gap: 0.1rem;
+    }
+
+    .confirmation dt {
+        margin-top: 0.6rem;
+    }
+
+    .confirmation dd {
+        text-align: left;
+    }
+
+    .confirmation-link {
+        width: 100%;
+        text-align: center;
+    }
+
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* ==========================================================
+   SMALL MOBILE SCREENS
+   ========================================================== */
+
+@media (max-width: 400px) {
+
+    .appointment-hero {
+        padding: 3rem 1rem 2rem;
+    }
+
+    .appointment-section {
+        padding: 1rem 1rem 3rem;
+    }
+
+    .appointment-card {
+        padding: 1.3rem 1rem;
+    }
+
+    .appointment-info {
+        padding: 1.3rem;
+    }
+
+    .appointment-steps {
+        padding: 3rem 1rem;
+    }
+}
+
+/* ---------- Touch Screens ---------- */
+
+@media (hover: none) {
+
+    [data-tip]::after {
+        display: none;
+    }
+}
+
+/* ---------- Reduced Motion ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    html {
+        scroll-behavior: auto;
+    }
+
+    * {
+        transition: none !important;
+    }
+}
+
+/* PDF Upload Field */
+
+.form-field input[type="file"] {
+    width: 100%;
+    padding: 14px;
+    border: 1px dashed #b8cbd8;
+    border-radius: 10px;
+    background: #f8fbfd;
+    cursor: pointer;
+    color: #526575;
+}
+
+.form-field input[type="file"]:hover {
+    border-color: #159caa;
+    background: #f0fafa;
+}
+
+.form-field small {
+    display: block;
+    margin-top: 8px;
+    color: #718096;
+    font-size: 13px;
+}
+
+/* PDF UPLOAD DESIGN */
+
+.file-upload {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    padding: 12px;
+    border: 1px dashed #b8cbd8;
+    border-radius: 10px;
+    background: #f8fbfd;
+}
+
+/* Hide default file input */
+
+.file-upload input[type="file"] {
+    display: none;
+}
+
+/* Custom upload button */
+
+.upload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+    background: #2166d1;
+    color: white;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 13px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+.upload-btn:hover {
+    background: #174fa8;
+}
+
+.upload-btn span {
+    font-size: 18px;
+}
+
+/* Selected file name */
+
+#fileName {
+    font-size: 13px;
+    color: #64748b;
+    overflow-wrap: anywhere;
+}
